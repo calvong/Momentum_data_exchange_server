@@ -4,7 +4,7 @@ import csv
 
 class DataExchangeServer:
     def __init__(self):
-        sock_ip = '192.137.137.5'
+        sock_ip = 'localhost'
         sock_port = 800
         self._sock = socket.socket()
         self._sock.connect((sock_ip, sock_port))
@@ -23,9 +23,9 @@ class DataExchangeServer:
         self._sock.sendall(bytes(data_msg, 'utf-8'))
 
         # wait for the command centre to analyse the data
-        cmd_response = self._sock.recv(1024).decode('utf-8')
-
-        is_outlier = int(cmd_response)
+        # cmd_response = self._sock.recv(1024).decode('utf-8')
+        #
+        # is_outlier = int(cmd_response)
 
         return is_outlier
 
@@ -35,7 +35,7 @@ class DataExchangeServer:
         :param data_set: data set number
         :return: whole data set in string
         """
-        data_set1_path = ''
+        data_set1_path = 'data1.csv'
         data_set2_path = ''
 
         if data_set == 1:
@@ -55,8 +55,16 @@ class DataExchangeServer:
                 ts.append(row[0])
                 data.append(row[1])
 
-        return "ok"
+        data_msg = "$\n"
+        for i in range(len(ts)):
+            data_msg += str(ts[i]) + ' ' + str(data[i]) + '\n'
+
+        data_msg += "#"
+
+        return data_msg
 
 
 if __name__ == '__main__':
     exchange_server = DataExchangeServer()
+
+    exchange_server.send_data(mmt_data=1)
