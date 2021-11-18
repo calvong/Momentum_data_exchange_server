@@ -5,8 +5,9 @@ import csv
 class DataExchangeServer:
     def __init__(self):
         sock_ip = 'localhost'
-        sock_port = 800
+        sock_port = 8888
         self._sock = socket.socket()
+        #self._sock.close()
         self._sock.connect((sock_ip, sock_port))
 
     def send_data(self, mmt_data):
@@ -23,11 +24,14 @@ class DataExchangeServer:
         self._sock.sendall(bytes(data_msg, 'utf-8'))
 
         # wait for the command centre to analyse the data
-        # cmd_response = self._sock.recv(1024).decode('utf-8')
-        #
-        # is_outlier = int(cmd_response)
-
-        return is_outlier
+        cmd_response = self._sock.recv(1024).decode('utf-8')
+        delim = ','
+        msg = cmd_response.split(delim)
+        is_outlier = msg[0]
+        temperature = msg[1]
+        print(f"is outlier = {is_outlier}")
+        print(f"Temperature {temperature}")
+        return is_outlier, temperature
 
     def _get_fake_data(self, data_set):
         """Construct a fake data string msg according to the data set number
