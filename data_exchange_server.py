@@ -35,8 +35,8 @@ class DataExchangeServer:
         :param data_set: data set number
         :return: whole data set in string
         """
-        data_set1_path = 'data1.csv'
-        data_set2_path = ''
+        data_set1_path = 'HPLC_data/Result_Export2909.csv'
+        data_set2_path = 'HPLC_data/Result_Export2889.csv'
 
         if data_set == 1:
             data_path = data_set1_path
@@ -67,4 +67,4 @@ class DataExchangeServer:
 if __name__ == '__main__':
     exchange_server = DataExchangeServer()
 
-    exchange_server.send_data(mmt_data=1)
+    exchange_server.send_data(mmt_data=2)
