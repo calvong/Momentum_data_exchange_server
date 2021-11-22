@@ -11,7 +11,7 @@ import os
 
 class DataExchangeServer:
     def __init__(self):
-        sock_ip = '192.137.137.5'
+        sock_ip = 'localhost'
         sock_port = 8888
         self._sock = socket.socket()
 
@@ -41,7 +41,7 @@ class DataExchangeServer:
         temperature = msg[1]
         # print(f"is outlier = {is_outlier}")
         # print(f"Temperature {temperature}")
-        return int(bool(is_outlier)), temperature
+        return int(bool(is_outlier)), int(temperature)
 
     def _get_fake_data(self, data_set):
         """Construct a fake data string msg according to the data set number
@@ -81,4 +81,4 @@ class DataExchangeServer:
 # if __name__ == '__main__':
 #     exchange_server = DataExchangeServer()
 #
-#     exchange_server.send_data(mmt_data=1)
+#     exchange_server.send_data(mmt_data=2)
